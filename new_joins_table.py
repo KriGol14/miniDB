@@ -1,4 +1,4 @@
-def _left_outer_join(self, table_right: Table, condition):
+ condition):
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
