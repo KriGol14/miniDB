@@ -2,6 +2,7 @@
 # import Database and Btree classes so that we can use their methods and attributes
 from database import Database
 from btree import Btree
+import pandas as pd
 
 # left outer join returns the matching rows as well as the rows which are in the left table but not in the right table
     def _left_outer_join(self, table_right: Table, condition):
@@ -266,7 +267,20 @@ from btree import Btree
         join_table_coltypes = self.column_types+table_right.column_types
         join_table = Table(name=join_table_name, column_names=join_table_colnames, column_types= join_table_coltypes)
 
+        # count the number of operations
+        no_of_ops = 0
+        # sort left table on column_name_left
+        sorted_left = sorted(self, key=lambda self:self[column_name_left])
+        # sort right table on column_name_right
+        sorted_right = sorted(table_right, key=lambda table_right:table_right[column_name_right])
 
+        # now that the tables are sorted we can merge the two tables using the pandas library 
+        merged_table = pd.merge(sorted_left, sorted_right, left_on="column_name_left", right_on="column_name_right")
+        for row_left in merged_table.data:
+            for row_right in merged_table.data:
+                no_of_ops += 1
+                join_table._insert(row_left + row_right)
+        
         print(f'## Select ops no. -> {no_of_ops}')
         print(f'# Left table size -> {len(self.data)}')
         print(f'# Right table size -> {len(table_right.data)}')
