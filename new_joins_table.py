@@ -181,7 +181,7 @@ def _full_outer_join(self, table_right: Table, condition):
 
 
 def _inl_join(self, table_right: Table, condition):
-    from database import Database
+        from database import Database
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
