@@ -48,7 +48,7 @@ def _left_outer_join(self, table_right: Table, condition):
                 join_table._insert(row_left + row_right)
             elif exists == False:
                 for i in range(table_right._no_of_columns):
-                    null_values.append(None)
+                    null_values.append(0)
                 join_table._insert(row_left + null_values)
 
         print(f'## Select ops no. -> {no_of_ops}')
@@ -101,7 +101,7 @@ def _right_outer_join(self, table_right: Table, condition):
                 join_table._insert(row_left + row_right)
             elif exists == False:
                 for i in range(self._no_of_columns):
-                    null_values.append(None)
+                    null_values.append(0)
                 join_table._insert(row_right + null_values)
             
         print(f'## Select ops no. -> {no_of_ops}')
@@ -153,7 +153,7 @@ def _full_outer_join(self, table_right: Table, condition):
             elif exists == False:
                 null_values = []
                 for i in range(table_right._no_of_columns):
-                    null_values.append(None)
+                    null_values.append(0)
                 join_table._insert(row_left + null_values)
 
         for row_left_new in self.data:
@@ -171,7 +171,7 @@ def _full_outer_join(self, table_right: Table, condition):
             elif exists == False:
                 null_values = []
                 for i in range(self._no_of_columns):
-                    null_values.append(None)
+                    null_values.append(0)
                 join_table._insert(row_right_new + null_values)
 
         print(f'## Select ops no. -> {no_of_ops}')
