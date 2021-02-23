@@ -479,7 +479,7 @@ class Table:
             elif exists == False:
                 for i in range(self._no_of_columns):
                     null_values.append(0)
-                join_table._insert(row_right + null_values)
+                join_table._insert(null_values + row_right)
             
         print(f'## Select ops no. -> {no_of_ops}')
         print(f'# Left table size -> {len(self.data)}')
