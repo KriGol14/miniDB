@@ -381,8 +381,8 @@ class Table:
 
 
 
-# left outer join returns the matching rows as well as the rows which are in the left table but not in the right table
-def _left_outer_join(self, table_right: Table, condition):
+    # left outer join returns the matching rows as well as the rows which are in the left table but not in the right table
+    def _left_outer_join(self, table_right: Table, condition):
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
@@ -435,7 +435,7 @@ def _left_outer_join(self, table_right: Table, condition):
         return join_table
 
 
-def _right_outer_join(self, table_right: Table, condition):
+    def _right_outer_join(self, table_right: Table, condition):
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
@@ -488,7 +488,7 @@ def _right_outer_join(self, table_right: Table, condition):
         return join_table
 
 
-def _full_outer_join(self, table_right: Table, condition):
+    def _full_outer_join(self, table_right: Table, condition):
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
@@ -558,7 +558,7 @@ def _full_outer_join(self, table_right: Table, condition):
         return join_table
 
 
-def _inl_join(self, table_right: Table, condition):
+    def _inl_join(self, table_right: Table, condition):
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
@@ -620,7 +620,7 @@ def _inl_join(self, table_right: Table, condition):
     # 1) sort both tables on the condition given 
     # 2) merge-like concurrently scan the two tables
     # 3) return the join_table containing the matching rows, found through merging the tables
-def _sm_join(self, table_right: Table, condition):
+    def _sm_join(self, table_right: Table, condition):
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
