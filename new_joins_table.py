@@ -44,9 +44,9 @@ def _left_outer_join(self, table_right: Table, condition):
                 no_of_ops+=1
                 if get_op(operator, left_value, right_value): #EQ_OP
                     exists = True
-            if exists = True:
+            if exists == True:
                 join_table._insert(row_left + row_right)
-            elif exists = False:
+            elif exists == False:
                 for i in range(table_right._no_of_columns):
                     null_values.append(None)
                 join_table._insert(row_left + null_values)
@@ -97,9 +97,9 @@ def _right_outer_join(self, table_right: Table, condition):
                 no_of_ops+=1
                 if get_op(operator, left_value, right_value): #EQ_OP
                     exists = True
-            if exists = True:
+            if exists == True:
                 join_table._insert(row_left + row_right)
-            elif exists = False:
+            elif exists == False:
                 for i in range(self._no_of_columns):
                     null_values.append(None)
                 join_table._insert(row_right + null_values)
@@ -148,9 +148,9 @@ def _full_outer_join(self, table_right: Table, condition):
                 if get_op(operator, left_value, right_value): #EQ_OP
                     exists = True 
             # if records exist in both tables 
-            if exists = True:
+            if exists == True:
                 join_table._insert(row_left+row_right)
-            elif exists = False:
+            elif exists == False:
                 null_values = []
                 for i in range(table_right._no_of_columns):
                     null_values.append(None)
@@ -166,9 +166,9 @@ def _full_outer_join(self, table_right: Table, condition):
                 if get_op(operator, left_value_new, right_value_new): #EQ_OP
                     exists = True 
             # if records exist in both tables 
-            if exists = True:
+            if exists == True:
                 join_table._insert(row_left_new + row_right_new)
-            elif exists = False:
+            elif exists == False:
                 null_values = []
                 for i in range(self._no_of_columns):
                     null_values.append(None)
