@@ -73,7 +73,7 @@ def _right_outer_join(self, table_right: Table, condition):
 
         # get the column names of both tables with the table name in front
         # ex. for left -> name becomes left_table_name_name etc
-         left_names = [f'{self._name}_{colname}' for colname in self.column_names]
+        left_names = [f'{self._name}_{colname}' for colname in self.column_names]
         right_names = [f'{table_right._name}_{colname}' for colname in table_right.column_names]
 
         # define the new tables name, its column names and types
