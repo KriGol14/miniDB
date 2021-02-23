@@ -2,7 +2,7 @@
 # import the new_joins_table file so that we can use the methods implemented in it
 from new_joins_table import *
 
-    def left_outer_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
+def left_outer_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
         '''
         Join two tables that are part of the database where condition is met.
         left_table_name -> left table's name (needs to exist in database)
@@ -31,7 +31,7 @@ from new_joins_table import *
                 res.show() 
 
 
-    def right_outer_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
+def right_outer_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
         '''
         Join two tables that are part of the database where condition is met.
         left_table_name -> left table's name (needs to exist in database)
@@ -60,7 +60,7 @@ from new_joins_table import *
                 res.show() 
 
 
-    def full_outer_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
+def full_outer_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
         '''
         Join two tables that are part of the database where condition is met.
         left_table_name -> left table's name (needs to exist in database)
@@ -89,7 +89,7 @@ from new_joins_table import *
                 res.show() 
 
 
-    def inl_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
+def inl_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
         '''
         Join two tables that are part of the database where condition is met.
         left_table_name -> left table's name (needs to exist in database)
@@ -118,7 +118,7 @@ from new_joins_table import *
                 res.show() 
 
 
-    def sm_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
+def sm_join(self, left_table_name, right_table_name, condition, save_as=None, return_object=False):
         '''
         Join two tables that are part of the database where condition is met.
         left_table_name -> left table's name (needs to exist in database)
