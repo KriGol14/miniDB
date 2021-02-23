@@ -515,6 +515,7 @@ class Table:
         # in order to perform outer_join we actually have to perform left_outer_join and right_outer_join
         # count the number of operations (<,> etc)
         no_of_ops = 0
+        null_values = []
         for row_left in self.data:
             null_values.clear()
             left_value = row_left[column_index_left]
