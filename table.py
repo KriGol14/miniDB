@@ -381,7 +381,6 @@ class Table:
 
 
 
-
 # left outer join returns the matching rows as well as the rows which are in the left table but not in the right table
 def _left_outer_join(self, table_right: Table, condition):
         '''
