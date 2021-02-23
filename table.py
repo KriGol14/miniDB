@@ -425,7 +425,7 @@ class Table:
                 join_table._insert(row_left + row_right)
             elif exists == False:
                 for i in range(table_right._no_of_columns):
-                    null_values.append(None)
+                    null_values.append(0)
                 join_table._insert(row_left + null_values)
 
         print(f'## Select ops no. -> {no_of_ops}')
