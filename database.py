@@ -6,6 +6,7 @@ import os
 from btree import Btree
 import shutil
 from misc import split_condition
+from new_joins_database import *
 
 class Database:
     '''
