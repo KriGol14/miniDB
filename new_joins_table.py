@@ -1,11 +1,11 @@
 # this file should be imported by the table.py file, so that its implementations work 
 # import Database and Btree classes so that we can use their methods and attributes
 from btree import Btree
+from table import Table
 import pandas as pd
 
 # left outer join returns the matching rows as well as the rows which are in the left table but not in the right table
 def _left_outer_join(self, table_right: Table, condition):
-        from table import Table
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
@@ -59,7 +59,6 @@ def _left_outer_join(self, table_right: Table, condition):
 
 
 def _right_outer_join(self, table_right: Table, condition):
-        from table import Table
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
@@ -113,7 +112,6 @@ def _right_outer_join(self, table_right: Table, condition):
 
 
 def _full_outer_join(self, table_right: Table, condition):
-        from table import Table
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
@@ -184,7 +182,6 @@ def _full_outer_join(self, table_right: Table, condition):
 
 
 def _inl_join(self, table_right: Table, condition):
-        from table import Table
         from database import Database
         '''
         Join table (left) with a supplied table (right) where condition is met.
@@ -248,7 +245,6 @@ def _inl_join(self, table_right: Table, condition):
     # 2) merge-like concurrently scan the two tables
     # 3) return the join_table containing the matching rows, found through merging the tables
 def _sm_join(self, table_right: Table, condition):
-        from table import Table
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
