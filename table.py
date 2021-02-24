@@ -560,6 +560,7 @@ class Table:
 
 
     def _inl_join(self, table_right: Table, condition):
+        from database import Database
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
@@ -590,7 +591,7 @@ class Table:
         '''
         # creating an index for the inner table
         index_name = f'{table_right._name}_index'
-        create_index(self, table_right._name, index_name, index_type = 'Btree')
+        _create_index(self, table_right._name, index_name, index_type = 'Btree')
         # now for each value of the left table, we need to search in the index we created and check if it exists 
         # if the value we are searching exists, it should be appended to the join_table        
         # create an empty list to store in it the values that match 
