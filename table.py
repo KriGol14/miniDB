@@ -649,7 +649,7 @@ class Table:
         # count the number of operations
         no_of_ops = 0
         # sort left table on column_name_left
-        sorted_left = sorted(self, key=lambda self:self[column_name_left])
+        # sorted_left = sorted(self, key=lambda self:self[column_name_left])
         # sort right table on column_name_right
         sorted_right = sorted(table_right, key=lambda table_right:table_right[column_name_right])
 
