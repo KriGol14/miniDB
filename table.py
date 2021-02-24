@@ -628,6 +628,19 @@ class Table:
         '''
         # get columns and operator
         column_name_left, operator, column_name_right = self._parse_condition(condition, join=True)
+
+        # sort table left and table right using the implementation of _sort def that already exists
+        # sort left table
+        column = self.columns[self.column_names.index(column_name_left)]
+        idx = sorted(range(len(column)), key=lambda k: column[k])
+        self.data = [self.data[i] for i in idx]
+        self._update()
+        # sort right table
+        column = self.columns[self.column_names.index(column_name_right)]
+        idx = sorted(range(len(column)), key=lambda k: column[k])
+        table_right.data = [table_right.data[i] for i in idx]
+        table_right._update()
+
         # try to find both columns, if you fail raise error
         try:
             column_index_left = self.column_names.index(column_name_left)
@@ -645,30 +658,39 @@ class Table:
         join_table_colnames = left_names+right_names
         join_table_coltypes = self.column_types+table_right.column_types
         join_table = Table(name=join_table_name, column_names=join_table_colnames, column_types= join_table_coltypes)
-
-        # count the number of operations
-        no_of_ops = 0
-
-        # sort table left and table right using the implementation of _sort def that already exists
-        # sort left table
-        column = self.columns[self.column_names.index(column_name)]
-        idx = sorted(range(len(column)), key=lambda k: column[k], reverse=not asc)
-        self.data = [self.data[i] for i in idx]
-        self._update()
-        # sort right table
-        column = self.columns[self.column_names.index(column_name)]
-        idx = sorted(range(len(column)), key=lamba k:column[k], reverse=not asc)
-        table_right.data = [table_right.data[i] for i in idx]
-        table_right._update()
-
-        # now that the tables are sorted we can merge the two tables using the pandas library 
-        merged_table = pd.merge(self, table_right, left_on="column_name_left", right_on="column_name_right")
-        for row_left in merged_table.data:
-            for row_right in merged_table.data:
-                no_of_ops += 1
-                join_table._insert(row_left + row_right)
+    
+        # merge the two tables now that they are sorted
+        inner_counter = 0
+        outer_counter = 0
         
-        print(f'## Select ops no. -> {no_of_ops}')
+        while inner_counter < len(self.columns)-1 and outer_counter < len(table_right.columns)-1:
+            if self.data[inner_counter][column_index_left] == table_right.data[outer_counter][column_index_right]:
+                join_table._insert(self.data[inner_counter] + table_right.data[outer_counter])
+                outer_counter+=1
+            elif self.data[inner_counter][column_index_left] > table_right.data[outer_counter][column_index_right]:
+                outer_counter+=1
+            elif self.data[inner_counter][column_index_left] < table_right.data[outer_counter][column_index_right]:
+                inner_counter+=1
+                if inner_counter <= len(self.data)-1:
+                    while outer_counter >= 1:
+                        if self.data[inner_counter][column_index_left] <= table_right.data[outer_counter][column_index_right]:
+                            outer_counter-=1
+                        else:
+                            break
+                else:
+                    break
+
+
+        # tried to merge the two tables using pandas library but it's not working for the moment
+        # now that the tables are sorted we can merge the two tables using the pandas library 
+        # merged_table = pd.merge(self, table_right, left_on="column_name_left", right_on="column_name_right")
+        # for row_left in merged_table.data:
+            # for row_right in merged_table.data:
+              # no_of_ops += 1
+               # join_table._insert(row_left + row_right)
+        
+        # find where to place no_of_ops sos
+        # print(f'## Select ops no. -> {no_of_ops}')
         print(f'# Left table size -> {len(self.data)}')
         print(f'# Right table size -> {len(table_right.data)}')
         return join_table
