@@ -648,13 +648,21 @@ class Table:
 
         # count the number of operations
         no_of_ops = 0
-        # sort left table on column_name_left
-        sorted_left = sorted(self, key=lambda self:self[column_name_left])
-        # sort right table on column_name_right
-        sorted_right = sorted(table_right, key=lambda table_right:table_right[column_name_right])
+
+        # sort table left and table right using the implementation of _sort def that already exists
+        # sort left table
+        column = self.columns[self.column_names.index(column_name)]
+        idx = sorted(range(len(column)), key=lambda k: column[k], reverse=not asc)
+        self.data = [self.data[i] for i in idx]
+        self._update()
+        # sort right table
+        column = self.columns[self.column_names.index(column_name)]
+        idx = sorted(range(len(column)), key=lamba k:column[k], reverse=not asc)
+        table_right.data = [table_right.data[i] for i in idx]
+        table_right._update()
 
         # now that the tables are sorted we can merge the two tables using the pandas library 
-        merged_table = pd.merge(sorted_left, sorted_right, left_on="column_name_left", right_on="column_name_right")
+        merged_table = pd.merge(self, table_right, left_on="column_name_left", right_on="column_name_right")
         for row_left in merged_table.data:
             for row_right in merged_table.data:
                 no_of_ops += 1
