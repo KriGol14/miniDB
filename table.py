@@ -660,25 +660,30 @@ class Table:
         join_table = Table(name=join_table_name, column_names=join_table_colnames, column_types= join_table_coltypes)
     
         # merge the two tables now that they are sorted
+        # initialize indexes to keep track of the table scanning while merging
+        # inner_counter is the index for self table
         inner_counter = 0
+        # outer_counter is the index for table_right
         outer_counter = 0
         
-        while inner_counter < len(self.columns)-1 and outer_counter < len(table_right.columns)-1:
+        # while loop checking whether the indexes have reached the end of the tables
+        while inner_counter <= len(self.columns)-1 and outer_counter <= len(table_right.columns)-1:
+            # if the two values are the same, then insert in the join_table and then increase the outer_counter by 1
             if self.data[inner_counter][column_index_left] == table_right.data[outer_counter][column_index_right]:
                 join_table._insert(self.data[inner_counter] + table_right.data[outer_counter])
                 outer_counter+=1
+            # else if self table's value is larger than right table's value, increase the outer counter by 1 again, but this time don't insert the values in the join_table
             elif self.data[inner_counter][column_index_left] > table_right.data[outer_counter][column_index_right]:
                 outer_counter+=1
+            # else if self table's value is smaller than right table's value, increase the inner counter by 1 and again don't insert the values in the join_table
             elif self.data[inner_counter][column_index_left] < table_right.data[outer_counter][column_index_right]:
                 inner_counter+=1
-                if inner_counter <= len(self.data)-1:
-                    while outer_counter >= 1:
-                        if self.data[inner_counter][column_index_left] <= table_right.data[outer_counter][column_index_right]:
-                            outer_counter-=1
-                        else:
-                            break
-                else:
-                    break
+                # if table_right's values are larger than self_table's data then decrease the outer_counter by 1 so that the values can be appropriately merged
+                while outer_counter >= 1:
+                    if self.data[inner_counter][column_index_left] <= table_right.data[outer_counter][column_index_right]:
+                        outer_counter-=1
+                    else:
+                        break
 
 
         # tried to merge the two tables using pandas library but it's not working for the moment
