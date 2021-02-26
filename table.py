@@ -560,7 +560,9 @@ class Table:
 
 
     def _inl_join(self, table_right: Table, condition):
-        from database import Database
+        from database import Database 
+        # create an instance of the Database class
+        database = Database()
         '''
         Join table (left) with a supplied table (right) where condition is met.
         '''
@@ -584,17 +586,28 @@ class Table:
         join_table_coltypes = self.column_types+table_right.column_types
         join_table = Table(name=join_table_name, column_names=join_table_colnames, column_types= join_table_coltypes)
 
-        # count the number of operations (<,> etc)
-        no_of_ops = 0
         '''
         INDEX NESTED LOOP JOIN ALGORITHM
         '''
         # creating an index for the inner table
         index_name = f'{table_right._name}_index'
-        _create_index(self, table_right._name, index_name, index_type = 'Btree')
-        # now for each value of the left table, we need to search in the index we created and check if it exists 
-        # if the value we are searching exists, it should be appended to the join_table        
-        # create an empty list to store in it the values that match 
+        database._create_index(self, table_right._name, index_name, index_type = 'Btree')
+
+        if Database.tables[table_right._name].pk._idx is None:
+            print("Can't create index because table has no primary key!")
+            return
+        if index_name not in Database.tables['meta_indexes'].index_name:
+            print("Creating Btree index")
+            Database.tables['meta_indexes']._insert([table_right._name, index_name])
+            Database._construct_index(table_right._name, index_name)
+            Database.save()
+        else:
+            print("Index already exists, can't create a new one!")
+            return
+
+        # now for each value of the left table, we need to search in the index we created and check if it exists
+        # if the value we are searching exists, it should be appended to the join_table
+        # create an empty list to store in it the values that match
         results = []
 
         for row_left in self.data:
@@ -610,9 +623,8 @@ class Table:
                 join_table._insert(results)
             except:
                 print("Not found")
-                pass 
+                pass
 
-        print(f'## Select ops no. -> {no_of_ops}')
         print(f'# Left table size -> {len(self.data)}')
         print(f'# Right table size -> {len(table_right.data)}')
 
